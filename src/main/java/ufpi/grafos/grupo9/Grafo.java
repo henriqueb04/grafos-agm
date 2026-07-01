@@ -21,7 +21,7 @@ public class Grafo {
 
     public void setAdjacente(int v1, int v2, int peso) {
         adjacencia[v1].put(v2, peso);
-        adjacencia[v2].put(v2, peso);
+        adjacencia[v2].put(v1, peso);
     }
 
     public void unsetAdjacente(int v1, int v2) {
