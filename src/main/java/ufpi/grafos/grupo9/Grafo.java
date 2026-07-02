@@ -5,7 +5,7 @@ import java.util.Optional;
 
 public class Grafo {
     private final int tamanho;
-    private final HashMap<Integer, Integer>[] adjacencia;
+    private final HashMap<Integer, Long>[] adjacencia;
 
     public Grafo(int tamanho) {
         this.tamanho = tamanho;
@@ -19,7 +19,7 @@ public class Grafo {
         return tamanho;
     }
 
-    public void setAdjacente(int v1, int v2, int peso) {
+    public void setAdjacente(int v1, int v2, long peso) {
         adjacencia[v1].put(v2, peso);
         adjacencia[v2].put(v1, peso);
     }
@@ -29,11 +29,22 @@ public class Grafo {
         adjacencia[v2].remove(v1);
     }
 
-    public Optional<Integer> getPeso(int v1, int v2) {
+    public Optional<Long> getPeso(int v1, int v2) {
         return Optional.ofNullable(adjacencia[v1].get(v2));
     }
 
-    public HashMap<Integer, Integer> getAdjacentes(int v) {
+    public HashMap<Integer, Long> getAdjacentes(int v) {
         return adjacencia[v];
+    }
+
+    public long getPesoTotal() {
+        long pesoTotal = 0L;
+        for (int i = 0; i < tamanho; i++) {
+            for (Long peso : adjacencia[i].values()) {
+                pesoTotal += peso;
+            }
+        }
+        // Dividido por 2, porque cada aresta é somada duas vezes (ida e volta)
+        return pesoTotal / 2;
     }
 }
