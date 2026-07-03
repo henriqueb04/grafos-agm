@@ -7,6 +7,7 @@ public class Grafo {
     private final int tamanho;
     private final HashMap<Integer, Long>[] adjacencia;
 
+    @SuppressWarnings("unchecked")
     public Grafo(int tamanho) {
         this.tamanho = tamanho;
         this.adjacencia = new HashMap[tamanho];
