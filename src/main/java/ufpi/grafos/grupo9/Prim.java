@@ -4,6 +4,9 @@ import java.util.PriorityQueue;
 
 public class Prim implements AlgoritmoAGM {
     private record ArestaCandidata(int origem, int destino, long peso){}
+    public String getNome() {
+        return "Prim";
+    }
     public Grafo gerarAGM(Grafo grafo){
         int tamanho = grafo.getTamanho();
         Grafo agm = new Grafo(tamanho);
@@ -31,10 +34,11 @@ public class Prim implements AlgoritmoAGM {
         return agm;
     }
     private void adicionarArestaDoVertice(Grafo grafo, int v, boolean[] visitado, PriorityQueue<ArestaCandidata> fila){
-        for (var entrada : grafo.getAdjacentes(v).entrySet()){
-            int vizinho = entrada.getKey();
+        int grau = grafo.getGrau(v);
+        for (int i = 0; i < grau; i++){
+            int vizinho = grafo.getDestino(v, i);
             if (!visitado[vizinho]){
-                fila.add(new ArestaCandidata(v, vizinho, entrada.getValue()));
+                fila.add(new ArestaCandidata(v, vizinho, grafo.getPeso(v, i)));
             }
         }
     }

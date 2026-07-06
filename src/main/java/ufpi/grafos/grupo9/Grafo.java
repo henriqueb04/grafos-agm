@@ -1,18 +1,23 @@
 package ufpi.grafos.grupo9;
 
-import java.util.HashMap;
-import java.util.Optional;
+import java.util.Arrays;
 
 public class Grafo {
     private final int tamanho;
-    private final HashMap<Integer, Long>[] adjacencia;
 
-    @SuppressWarnings("unchecked")
+    private int[][] adjDestino;
+    private long[][] adjPeso;
+    private int[] grau;
+
     public Grafo(int tamanho) {
         this.tamanho = tamanho;
-        this.adjacencia = new HashMap[tamanho];
+        this.adjDestino = new int[tamanho][];
+        this.adjPeso = new long[tamanho][];
+        this.grau = new int[tamanho];
+
         for (int i = 0; i < tamanho; i++) {
-            this.adjacencia[i] = new HashMap<>();
+            adjDestino[i] = new int[4];
+            adjPeso[i] = new long[4];
         }
     }
 
@@ -20,32 +25,30 @@ public class Grafo {
         return tamanho;
     }
 
-    public void setAdjacente(int v1, int v2, long peso) {
-        adjacencia[v1].put(v2, peso);
-        adjacencia[v2].put(v1, peso);
+    public void setAdjacente(int u, int v, long peso) {
+        adicionar(u, v, peso);
+        adicionar(v, u, peso);
     }
 
-    public void unsetAdjacente(int v1, int v2) {
-        adjacencia[v1].remove(v2);
-        adjacencia[v2].remove(v1);
-    }
-
-    public Optional<Long> getPeso(int v1, int v2) {
-        return Optional.ofNullable(adjacencia[v1].get(v2));
-    }
-
-    public HashMap<Integer, Long> getAdjacentes(int v) {
-        return adjacencia[v];
-    }
-
-    public long getPesoTotal() {
-        long pesoTotal = 0L;
-        for (int i = 0; i < tamanho; i++) {
-            for (Long peso : adjacencia[i].values()) {
-                pesoTotal += peso;
-            }
+    private void adicionar(int u, int v, long peso) {
+        if (grau[u] == adjDestino[u].length) {
+            int novoTamanho = adjDestino[u].length * 2;
+            adjDestino[u] = Arrays.copyOf(adjDestino[u], novoTamanho);
+            adjPeso[u] = Arrays.copyOf(adjPeso[u], novoTamanho);
         }
-        // Dividido por 2, porque cada aresta é somada duas vezes (ida e volta)
-        return pesoTotal / 2;
+
+        adjDestino[u][grau[u]] = v;
+        adjPeso[u][grau[u]] = peso;
+        grau[u]++;
+    }
+
+    public int getGrau(int u) {
+        return grau[u];
+    }
+    public int getDestino(int u, int index) {
+        return adjDestino[u][index];
+    }
+    public long getPeso(int u, int index) {
+        return adjPeso[u][index];
     }
 }

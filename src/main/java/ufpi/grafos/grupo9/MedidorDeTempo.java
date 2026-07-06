@@ -5,11 +5,12 @@ import java.util.Map;
 
 public class MedidorDeTempo {
     private static final int QUANTIDADE_AMOSTRAS = 10;
-    private static final int[] TAMANHOS = {10, 25, 50, 100, 250, 500, 1000, 1500, 2000, 5000, 10000, 20000};
+    private static final int[] TAMANHOS = {250, 500, 1000, 1250, 1500, 1750, 2000, 2500, 3000, 3500, 4000, 4500, 5000, 6000};
     private static final long PESO_MAXIMO = 10000;
-    private static final double DENSIDADE_PADRAO = 0.4;
+    private static final double DENSIDADE_PADRAO = 0.05;
 
     public MedidorDeTempo() {
+        IO.println("Aquecendo...");
         executarAquecimento();
     }
 
@@ -47,23 +48,29 @@ public class MedidorDeTempo {
     private Map<Integer, Double> medirTemposAlgo(AlgoritmoAGM algo, boolean isCompleto) {
         Map<Integer, Double> medias = new HashMap<>();
         GeradorGrafos gerador = new GeradorGrafos();
+        IO.println("=======================");
+        IO.println("ALGORITMO: " + algo.getNome());
+        IO.println("=======================");
         for (var tamanho : TAMANHOS) {
+            IO.println("Tamanho: " + tamanho);
             double tempoTotal = 0;
-            Grafo[] grafosGerados = new Grafo[QUANTIDADE_AMOSTRAS];
             for (int i = 0; i < QUANTIDADE_AMOSTRAS; i++) {
+                Grafo g;
                 if (isCompleto) {
-                    grafosGerados[i] = gerador.gerarGrafoCompleto(tamanho, PESO_MAXIMO);
+                    g = gerador.gerarGrafoCompleto(tamanho, PESO_MAXIMO);
                 } else {
-                    grafosGerados[i] = gerador.gerarGrafoIncompleto(tamanho, DENSIDADE_PADRAO, PESO_MAXIMO);
+                    g = gerador.gerarGrafoIncompleto(tamanho, DENSIDADE_PADRAO, PESO_MAXIMO);
                 }
-            }
-            for (int i = 0; i < QUANTIDADE_AMOSTRAS; i++) {
+                IO.print("Tentativa " + (i+1) + ": ");
                 long startTime = System.nanoTime();
-                algo.gerarAGM(grafosGerados[i]);
+                algo.gerarAGM(g);
                 long endTime = System.nanoTime();
-                tempoTotal += endTime - startTime;
+                double tempo = (double) (endTime - startTime) / 1_000_000_000.0;
+                IO.println(tempo + "s");
+                tempoTotal += tempo;
+                g = null;
             }
-            medias.put(tamanho, (tempoTotal / QUANTIDADE_AMOSTRAS) / 1_000_000_000.0);
+            medias.put(tamanho, tempoTotal / QUANTIDADE_AMOSTRAS);
         }
         return medias;
     }
