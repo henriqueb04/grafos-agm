@@ -17,7 +17,7 @@ public class GeradorGrafos {
         return grafo;
     }
 
-    public Grafo gerarGrafoIncompleto(int tamanho, double densidade, long pesoMaximo) {
+    public Grafo gerarGrafoNaoCompleto(int tamanho, double densidade, long pesoMaximo) {
         Grafo grafo = new Grafo(tamanho);
 
         for (int i = 0; i < tamanho; i++) {

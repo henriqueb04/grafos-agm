@@ -20,7 +20,7 @@ public class MedidorDeTempo {
         return medirTemposAlgo(prim, true);
     }
 
-    public Map<Integer, Double> medirTempoPrimIncompletos() {
+    public Map<Integer, Double> medirTempoPrimNaoCompletos() {
         Prim prim = new Prim();
         return medirTemposAlgo(prim, false);
     }
@@ -30,7 +30,7 @@ public class MedidorDeTempo {
         return medirTemposAlgo(kruskal, true);
     }
 
-    public Map<Integer, Double> medirTempoKruskalIncompletos() {
+    public Map<Integer, Double> medirTempoKruskalNaoCompletos() {
         Kruskal kruskal = new Kruskal();
         return medirTemposAlgo(kruskal, false);
     }
@@ -60,7 +60,7 @@ public class MedidorDeTempo {
                 if (isCompleto) {
                     g = gerador.gerarGrafoCompleto(tamanho, PESO_MAXIMO);
                 } else {
-                    g = gerador.gerarGrafoIncompleto(tamanho, DENSIDADE_PADRAO, PESO_MAXIMO);
+                    g = gerador.gerarGrafoNaoCompleto(tamanho, DENSIDADE_PADRAO, PESO_MAXIMO);
                 }
                 IO.print("Tentativa " + (i+1) + ": ");
                 long startTime = System.nanoTime();

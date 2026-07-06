@@ -16,8 +16,8 @@ public class CriadorDeGraficos {
         IO.println("Medindo tempos...");
         var primCompleto = medidor.medirTempoPrimCompletos();
         var kruskalCompleto = medidor.medirTempoKruskalCompletos();
-        var primIncompleto = medidor.medirTempoPrimIncompletos();
-        var kruskalIncompleto = medidor.medirTempoKruskalIncompletos();
+        var primNaoCompleto = medidor.medirTempoPrimNaoCompletos();
+        var kruskalNaoCompleto = medidor.medirTempoKruskalNaoCompletos();
         IO.println("===========================");
         IO.println("========== Prim ===========");
         IO.println("===========================");
@@ -25,8 +25,8 @@ public class CriadorDeGraficos {
         primCompleto.entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(entry ->
                 IO.println(String.format("%d: %.4f", entry.getKey(), entry.getValue()))
         );
-        IO.println("------- Incompletos -------");
-        primIncompleto.entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(entry ->
+        IO.println("------ Não Completos -------");
+        primNaoCompleto.entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(entry ->
                 IO.println(String.format("%d: %.4f", entry.getKey(), entry.getValue()))
         );
         IO.println("===========================");
@@ -36,12 +36,12 @@ public class CriadorDeGraficos {
         kruskalCompleto.entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(entry ->
                 IO.println(String.format("%d: %.4f", entry.getKey(), entry.getValue()))
         );
-        IO.println("------- Incompletos -------");
-        kruskalIncompleto.entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(entry ->
+        IO.println("------ Não Completos -------");
+        kruskalNaoCompleto.entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(entry ->
                 IO.println(String.format("%d: %.4f", entry.getKey(), entry.getValue()))
         );
         mostrarGrafico("Grafos Completos", primCompleto, kruskalCompleto);
-        mostrarGrafico("Grafos Incompletos (densidade = 5%)", primIncompleto, kruskalIncompleto);
+        mostrarGrafico("Grafos Não Completos (densidade = 5%)", primNaoCompleto, kruskalNaoCompleto);
     }
 
     static XYSeries toSeries(Map<Integer, Double> map, String nome) {
