@@ -1,5 +1,6 @@
 package ufpi.grafos.grupo9;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,14 +47,14 @@ public class MedidorDeTempo {
     }
 
     private Map<Integer, Double> medirTemposAlgo(AlgoritmoAGM algo, boolean isCompleto) {
-        Map<Integer, Double> medias = new HashMap<>();
+        Map<Integer, Double> medianas = new HashMap<>();
         GeradorGrafos gerador = new GeradorGrafos();
         IO.println("=======================");
         IO.println("ALGORITMO: " + algo.getNome());
         IO.println("=======================");
         for (var tamanho : TAMANHOS) {
             IO.println("Tamanho: " + tamanho);
-            double tempoTotal = 0;
+            ArrayList<Double> tempos = new ArrayList<>();
             for (int i = 0; i < QUANTIDADE_AMOSTRAS; i++) {
                 Grafo g;
                 if (isCompleto) {
@@ -67,11 +68,17 @@ public class MedidorDeTempo {
                 long endTime = System.nanoTime();
                 double tempo = (double) (endTime - startTime) / 1_000_000_000.0;
                 IO.println(tempo + "s");
-                tempoTotal += tempo;
+                tempos.add(tempo);
                 g = null;
             }
-            medias.put(tamanho, tempoTotal / QUANTIDADE_AMOSTRAS);
+            double mediana;
+            if ((QUANTIDADE_AMOSTRAS & 1) != 0) {
+                mediana = tempos.get(QUANTIDADE_AMOSTRAS/2);
+            } else {
+                mediana = (tempos.get(QUANTIDADE_AMOSTRAS/2 - 1) + tempos.get(QUANTIDADE_AMOSTRAS/2)) / 2;
+            }
+            medianas.put(tamanho, mediana);
         }
-        return medias;
+        return medianas;
     }
 }

@@ -22,11 +22,11 @@ public class CriadorDeGraficos {
         IO.println("========== Prim ===========");
         IO.println("===========================");
         IO.println("-------- Completos --------");
-        primIncompleto.entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(entry ->
+        primCompleto.entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(entry ->
                 IO.println(String.format("%d: %.4f", entry.getKey(), entry.getValue()))
         );
         IO.println("------- Incompletos -------");
-        primCompleto.entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(entry ->
+        primIncompleto.entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(entry ->
                 IO.println(String.format("%d: %.4f", entry.getKey(), entry.getValue()))
         );
         IO.println("===========================");
