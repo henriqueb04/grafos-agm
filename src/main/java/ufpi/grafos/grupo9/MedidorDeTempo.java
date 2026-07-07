@@ -1,6 +1,7 @@
 package ufpi.grafos.grupo9;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -71,6 +72,7 @@ public class MedidorDeTempo {
                 tempos.add(tempo);
                 g = null;
             }
+            tempos.sort(Comparator.naturalOrder());
             double mediana;
             if ((QUANTIDADE_AMOSTRAS & 1) != 0) {
                 mediana = tempos.get(QUANTIDADE_AMOSTRAS/2);

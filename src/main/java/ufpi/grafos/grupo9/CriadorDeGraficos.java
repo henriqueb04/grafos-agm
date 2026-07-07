@@ -23,22 +23,22 @@ public class CriadorDeGraficos {
         IO.println("===========================");
         IO.println("-------- Completos --------");
         primCompleto.entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(entry ->
-                IO.println(String.format("%d: %.4f", entry.getKey(), entry.getValue()))
+                IO.println(String.format("%d: %.4fs", entry.getKey(), entry.getValue()))
         );
         IO.println("------ Não Completos -------");
         primNaoCompleto.entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(entry ->
-                IO.println(String.format("%d: %.4f", entry.getKey(), entry.getValue()))
+                IO.println(String.format("%d: %.4fs", entry.getKey(), entry.getValue()))
         );
         IO.println("===========================");
         IO.println("========= Kruskal =========");
         IO.println("===========================");
         IO.println("-------- Completos --------");
         kruskalCompleto.entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(entry ->
-                IO.println(String.format("%d: %.4f", entry.getKey(), entry.getValue()))
+                IO.println(String.format("%d: %.4fs", entry.getKey(), entry.getValue()))
         );
         IO.println("------ Não Completos -------");
         kruskalNaoCompleto.entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(entry ->
-                IO.println(String.format("%d: %.4f", entry.getKey(), entry.getValue()))
+                IO.println(String.format("%d: %.4fs", entry.getKey(), entry.getValue()))
         );
         mostrarGrafico("Grafos Completos", primCompleto, kruskalCompleto);
         mostrarGrafico("Grafos Não Completos (densidade = 5%)", primNaoCompleto, kruskalNaoCompleto);
@@ -62,8 +62,8 @@ public class CriadorDeGraficos {
 
         JFreeChart lineChart = ChartFactory.createXYLineChart(
                 titulo,
-                "Tamanho",
-                "Tempo",
+                "Quantidade de Vértices",
+                "Tempo (s)",
                 dataset,
                 PlotOrientation.VERTICAL,
                 true,
